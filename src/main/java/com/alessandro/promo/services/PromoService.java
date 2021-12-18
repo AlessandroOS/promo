@@ -4,6 +4,7 @@ import com.alessandro.promo.models.Promo;
 import com.alessandro.promo.repositories.PromoRepository;
 import com.alessandro.promo.services.exceptions.DatabaseException;
 import com.alessandro.promo.services.exceptions.ResourceNotFoundException;
+import com.alessandro.promo.validations.PromoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,6 +21,8 @@ public class PromoService {
 
     @Autowired
     PromoRepository repository;
+    @Autowired
+    PromoValidator validator;
 
     public Promo findById(Long id) {
         Optional<Promo> obj = repository.findById(id);
@@ -31,6 +34,11 @@ public class PromoService {
     }
 
     public Promo Cadastrar(Promo promo) {
+        final var isValid = validator.validate(promo);
+
+        if (!isValid) {
+            System.out.println("Todos os campos são obrigatórios");
+        }
         return repository.save(promo);
     }
 

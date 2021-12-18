@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class PromoController {
     }
 
     @PostMapping
-    public ResponseEntity<Promo> cadastrar(@RequestBody Promo promo) {
+    public ResponseEntity<Promo> cadastrar(@RequestBody @Valid Promo promo) {
         promo = service.Cadastrar(promo);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(promo.getId()).toUri();
         return ResponseEntity.created(uri).body(promo);

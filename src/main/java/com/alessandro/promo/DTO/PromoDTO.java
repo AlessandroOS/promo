@@ -1,32 +1,33 @@
-package com.alessandro.promo.models;
+package com.alessandro.promo.DTO;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import com.alessandro.promo.models.Promo;
+
 import java.util.Objects;
 
-@Entity
-@Table(name = "promo")
-public class Promo {
+public class PromoDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String descricao;
-    @NotBlank(message = "Campo não pode ser branco ou vazio")
     private String link;
-
     private Double preco;
 
-    public Promo() {
+    public PromoDTO() {
     }
 
-    public Promo(Long id, String descricao, String link, Double preco) {
+    public PromoDTO(Long id, String descricao, String link, Double preco) {
         this.id = id;
         this.descricao = descricao;
         this.link = link;
         this.preco = preco;
     }
+
+    public PromoDTO(Promo promo) {
+        id = promo.getId();
+        descricao = promo.getDescricao();
+        link = promo.getLink();
+        preco = promo.getPreco();
+    }
+
 
     public Long getId() {
         return id;
@@ -64,7 +65,7 @@ public class Promo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Promo promo = (Promo) o;
+        PromoDTO promo = (PromoDTO) o;
         return Objects.equals(id, promo.id);
     }
 
